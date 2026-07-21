@@ -1,6 +1,3 @@
-```markdown
-
-```
 # 🔐 SSH Key Distribution Automation
 
 <p align="center">
