@@ -193,6 +193,15 @@ None
 =======================================================
 
 ```
+---
+
+## 📊 Execution Output
+
+```text
+
+![Terminal Execution Output](assets/Output.png)
+
+```
 
 ---
 
