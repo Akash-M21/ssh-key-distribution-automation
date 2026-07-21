@@ -1,14 +1,18 @@
----
-
 ```markdown
+
+```
 # 🔐 SSH Key Distribution Automation
 
-![Python Version](https://img.shields.io/badge/Python-3.8%2B-3776AB?style=flat&logo=python&logoColor=white)
-![Ansible](https://img.shields.io/badge/Ansible-Ready-EE0000?style=flat&logo=ansible&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux-Supported-FCC624?style=flat&logo=linux&logoColor=black)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python Version" />
+  <img src="https://img.shields.io/badge/Ansible-Ready-EE0000?style=for-the-badge&logo=ansible&logoColor=white" alt="Ansible" />
+  <img src="https://img.shields.io/badge/Linux-Supported-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux" />
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License: MIT" />
+</p>
 
-Automate passwordless SSH authentication across multiple Linux servers using Python, preparing multi-node infrastructure for seamless Ansible orchestration.
+<p align="center">
+  <b>Automate passwordless SSH authentication across multi-node Linux infrastructure using Python to prepare environments for seamless Ansible orchestration.</b>
+</p>
 
 ---
 
@@ -19,12 +23,13 @@ Managing SSH access manually across expanding server environments is repetitive,
 This project provides a modular, lightweight Python automation framework that verifies host connectivity, deploys public SSH keys, handles edge-case execution failures gracefully, and generates actionable summary reports. It eliminates manual key management and acts as a foundation for Ansible node onboarding.
 
 ### ✨ Key Features
-- **Network Pre-checks:** Automated ICMP/port reachability checks before attempting key copy operations.
-- **Secure Handling:** Interactively captures server credentials without storing plaintext passwords using `getpass`.
-- **Batch Processing:** Reads target server metadata directly from structured inventory source files (`servers.csv`).
-- **Resilient Execution:** Catches execution errors per-host without halting the pipeline.
-- **Reporting System:** Terminal-formatted summary breakdown of successful vs. failed operations with failure reasons.
-- **Ansible Readiness:** Prepares raw Linux hosts for passwordless Ansible playbook deployments.
+
+* 📡 **Network Pre-checks:** Automated ICMP/port reachability checks before attempting key copy operations.
+* 🔒 **Secure Credentials:** Interactively captures server credentials without storing plaintext passwords using `getpass`.
+* 📋 **Batch Processing:** Reads target server metadata directly from structured inventory source files (`inventory.csv`).
+* 🛡️ **Resilient Execution:** Catches execution errors per-host without halting the pipeline.
+* 📊 **Reporting System:** Terminal-formatted summary breakdown of successful vs. failed operations with failure reasons.
+* 🚀 **Ansible Readiness:** Prepares raw Linux hosts for passwordless Ansible playbook deployments.
 
 ---
 
@@ -69,26 +74,43 @@ This project provides a modular, lightweight Python automation framework that ve
 ```text
 ssh-key-distribution-automation/
 │
+├── assets/
+│   └── Output.png          # Screenshot of execution output
 ├── main.py                 # Core application entry point
 ├── config.py               # Application configuration & default paths
 ├── ping.py                 # Network reachability verification module
 ├── ssh_copy.py             # SSH key distribution logic
 ├── report.py               # Summary report generator module
-├── servers.csv             # Target inventory configuration
-├── requirements.txt        # Python dependency manifest
-├── LICENSE                 # MIT License file
+├── inventory.csv           # Target inventory configuration
+├── requirements.txt        # Python dependency manifest              
 └── README.md               # Documentation
 
 ```
 
 ---
 
-## 🛠️ Tech Stack & Requirements
+## 🛠️ Tech Stack & Prerequisites
+
+### Tech Stack
 
 * **Language:** Python 3.8+
 * **Core Libraries:** `paramiko`, `getpass`, `csv`
 * **Target OS:** Linux (Ubuntu/Debian, RHEL/CentOS/Rocky), macOS
-* **Prerequisites:** OpenSSH Client, existing SSH keypair (`id_rsa` / `id_rsa.pub`)
+
+### Prerequisites
+
+Before running the automation script, ensure your system meets the following requirements:
+
+* **Python 3.8+** and `pip` installed on your control node.
+* **OpenSSH Client** installed locally.
+* **Network Access:** ICMP (Ping) and TCP port 22 (SSH) allowed from your control machine to target hosts.
+* **Valid Local SSH Keypair:** Generate one if you do not already have `~/.ssh/id_rsa.pub` available:
+```bash
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N ""
+
+```
+
+
 
 ---
 
@@ -98,7 +120,7 @@ ssh-key-distribution-automation/
 
 ```bash
 # Clone repository
-git clone [https://github.com/](https://github.com/)<your-username>/ssh-key-distribution-automation.git
+git clone [https://github.com/your-username/ssh-key-distribution-automation.git](https://github.com/your-username/ssh-key-distribution-automation.git)
 cd ssh-key-distribution-automation
 
 # Create and activate virtual environment
@@ -110,59 +132,68 @@ pip install -r requirements.txt
 
 ```
 
-### 2. Configure SSH Keys & Inventory
+### 2. Configure Target Inventory
 
-If you do not have an existing SSH key pair, generate one:
-
-```bash
-ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N ""
-
-```
-
-Update `servers.csv` with your target server details:
+Update `inventory.csv` with your target server details:
 
 ```csv
 hostname,ip
-server-web-01,192.168.1.10
-server-db-01,192.168.1.20
-server-app-01,192.168.1.30
+worker1,172.31.22.6
+worker2,172.31.29.202
+
+```
+
+### 3. Run Automation
+
+Run the script and provide the initial remote host credentials when prompted:
+
+```bash
+python3 main.py
 
 ```
 
 ---
 
-## 🚀 Execution
-
-Run the script and provide the initial remote host credentials when prompted:
-
-```bash
-python main.py
-
-```
-
-### 📊 Sample Output
+## 📊 Sample Output
 
 ```text
-==================================================
-           SSH KEY DISTRIBUTION REPORT            
-==================================================
+ubuntu@ip-172-31-25-93:~/ssh-key-distribution$ python3 main.py
+=======================================================
+SSH KEY DISTRIBUTION AUTOMATION
+=======================================================
+Username : akash
+Password : 
 
-SUCCESSFUL DEPLOYMENTS
---------------------------------------------------
-[✓] server-web-01 (192.168.1.10) - Key installed successfully
-[✓] server-db-01  (192.168.1.20) - Key installed successfully
+Found 2 server(s).
 
-FAILED DEPLOYMENTS
---------------------------------------------------
-[✗] server-app-01 (192.168.1.30) - Host Unreachable (Ping Timeout)
+-------------------------------------------------------
+[1/2] worker1
+IP Address : 172.31.22.6
+Status     : Host Reachable
+SSH Key    : Installed
+-------------------------------------------------------
+[2/2] worker2
+IP Address : 172.31.29.202
+Status     : Host Reachable
+SSH Key    : Installed
 
---------------------------------------------------
-EXECUTION SUMMARY
---------------------------------------------------
-Total Hosts Processed : 3
-Successful           : 2
-Failed               : 1
-==================================================
+
+=======================================================
+SSH KEY DISTRIBUTION REPORT
+=======================================================
+Total Servers : 2
+Successful    : 2
+Failed        : 0
+
+Successful Hosts
+-------------------------------------------------------
+✔ worker1
+✔ worker2
+
+Failed Hosts
+-------------------------------------------------------
+None
+=======================================================
 
 ```
 
@@ -179,15 +210,9 @@ Failed               : 1
 ## 📈 Future Enhancements
 
 * [ ] Add parallel host processing via Python `concurrent.futures`.
-* [ ] Support YAML/Dynamic Inventory sources.
+* [ ] Support YAML / Dynamic Inventory sources.
 * [ ] Add structured log output to disk (`/logs/execution.log`).
 * [ ] Generate standard Ansible inventory files (`hosts.ini`) post-successful execution.
-
----
-
-## 📜 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
@@ -197,7 +222,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 *DevOps & Infrastructure Automation*
 
-[GitHub Profile](https://www.google.com/search?q=https://github.com/%3Cyour-username%3E) | [LinkedIn Profile](https://www.google.com/search?q=https://linkedin.com/in/%3Cyour-profile%3E)
+[GitHub Profile](https://github.com/) | [LinkedIn Profile](https://linkedin.com/)
 
 ```
 
