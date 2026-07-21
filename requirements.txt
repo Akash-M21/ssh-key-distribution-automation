@@ -1,0 +1,2 @@
+# SSH client library
+paramiko>=3.5.0
