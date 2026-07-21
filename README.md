@@ -154,43 +154,27 @@ python3 main.py
 ## 📊 Sample Output
 
 ```text
-ubuntu@ip-172-31-25-93:~/ssh-key-distribution$ python3 main.py
-=======================================================
-SSH KEY DISTRIBUTION AUTOMATION
-=======================================================
-Username : akash
-Password : 
 
-Found 2 server(s).
+==================================================
+           SSH KEY DISTRIBUTION REPORT            
+==================================================
 
--------------------------------------------------------
-[1/2] worker1
-IP Address : 172.31.22.6
-Status     : Host Reachable
-SSH Key    : Installed
--------------------------------------------------------
-[2/2] worker2
-IP Address : 172.31.29.202
-Status     : Host Reachable
-SSH Key    : Installed
+SUCCESSFUL DEPLOYMENTS
+--------------------------------------------------
+[✓] server-web-01 (192.168.1.10) - Key installed successfully
+[✓] server-db-01  (192.168.1.20) - Key installed successfully
 
+FAILED DEPLOYMENTS
+--------------------------------------------------
+[✗] server-app-01 (192.168.1.30) - Host Unreachable (Ping Timeout)
 
-=======================================================
-SSH KEY DISTRIBUTION REPORT
-=======================================================
-Total Servers : 2
-Successful    : 2
-Failed        : 0
-
-Successful Hosts
--------------------------------------------------------
-✔ worker1
-✔ worker2
-
-Failed Hosts
--------------------------------------------------------
-None
-=======================================================
+--------------------------------------------------
+EXECUTION SUMMARY
+--------------------------------------------------
+Total Hosts Processed : 3
+Successful           : 2
+Failed               : 1
+==================================================
 
 ```
 ---
