@@ -222,8 +222,3 @@ None
 
 *DevOps & Infrastructure Automation*
 
-[GitHub Profile](https://github.com/) | [LinkedIn Profile](https://linkedin.com/)
-
-```
-
-```
